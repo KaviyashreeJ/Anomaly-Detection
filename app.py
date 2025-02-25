@@ -1,12 +1,16 @@
 from flask import Flask, request, jsonify
 import pandas as pd
 import numpy as np
-import joblib
 import os
+import joblib
 
-# Get the absolute path to the model file
-BASE_DIR = os.path.dirname(os.path.abspath("C:/Cloud Storage and Security/Security Model/flask-anomaly-detection/app.py"))
+# Get the directory of the current script
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "model.joblib")
+
+# Ensure model file exists
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError("❌ model.joblib not found! Ensure it is uploaded.")
 
 # Load trained model
 model = joblib.load(MODEL_PATH)
